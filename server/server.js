@@ -1,9 +1,9 @@
-var express = require('express');
-var bodyParser = require('body-parser') ;
-
+var express 	= require('express');
+var bodyParser 	= require('body-parser');
+var {ObjectID} 	= require('mongodb');
 const {mongoose} = require('./db/mongoose.js');
-const {Todo} = require('./models/todo.js');
-const {Users} = require('./models/user.js');
+const {Todo} 	 = require('./models/todo.js');
+const {Users} 	 = require('./models/user.js');
 
 var app = express();
 
@@ -22,11 +22,26 @@ app.post('/todos',(req,res) => {
 	});
 });
 
-app.get('/todos',(req,res) => {
+/*app.get('/todos',(req,res) => {
 	Todo.find().then((result) => {
 		res.send({result});
 	},(err) => {
 		res.status(400).send(err);
+	});
+});*/
+
+// Get Params Logic
+app.get('/todos/:todoId',(req,res) => {
+	var id = req.params.todoId ;
+	if(!ObjectID.isValid(id)){
+		return res.send('Id is not valid') ;
+	}
+	console.log(id);
+	Users.findById(id).then((user) => {
+		if(!user){
+			return res.send('User not found');
+		}
+		res.send({user});
 	});
 });
 
