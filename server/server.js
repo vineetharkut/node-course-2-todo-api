@@ -51,11 +51,11 @@ app.delete('/todos/:id',(req,res) => {
 		return res.status(404).send('Id is not valid');
 	}
 
-	Todo.findByIdAndRemove(id).then((docs) => {
-		if(!docs){
+	Todo.findByIdAndRemove(id).then((todo) => {
+		if(!todo){
 			return res.status(404).send('Records already removed');
 		}
-		res.status(200).send({docs}) ;
+		res.status(200).send({todo}) ;
 	},(err) => {
 		res.status(404).send('Some error occur');
 	});
