@@ -184,7 +184,7 @@ describe('PATCH /todos/:id',()=>{
 				expect(res.body.todo.completed).toBe(false)
 				expect(res.body.todo.completedAt).toNotExist(null)
 			})
-			.end(done); 
+			.end(done);  
 	});
 });
 
